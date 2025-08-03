@@ -30,14 +30,14 @@ namespace RobotSimulator
         }
 
         /// <summary>
-        /// Execute commands for a single robot
+        /// Execute instructions for a single robot
         /// </summary>
         /// <param name="x">start x co-ordinate</param>
         /// <param name="y">start y co-ordinate</param>
         /// <param name="orientation">initial orientation</param>
-        /// <param name="commands">string of commands</param>
+        /// <param name="instructions">string of commands</param>
         /// <returns></returns>
-        public RobotState ExecuteCommands(sbyte x, sbyte y, char orientation, string commands)
+        public RobotState Execute(sbyte x, sbyte y, char orientation, string instructions)
         {
             RobotState state = new RobotState
             {
@@ -47,7 +47,7 @@ namespace RobotSimulator
                 Lost = false
             };
 
-            foreach (char instruction in commands.ToUpperInvariant())
+            foreach (char instruction in instructions.ToUpperInvariant())
             {
                 if (_Instructions.TryGetValue(instruction, out IInstruction instr))
                 {

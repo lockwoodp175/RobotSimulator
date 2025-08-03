@@ -12,9 +12,9 @@ namespace RobotSimulatorTests
             var sut = new Simulator(5, 3);
 
             // Act
-            var robot1 = sut.ExecuteCommands(1, 1, 'E', "RFRFRFRF");
-            var robot2 = sut.ExecuteCommands(3, 2, 'N', "FRRFLLFFRRFLL");
-            var robot3 = sut.ExecuteCommands(0, 3, 'W', "LLFFFLFLFL");
+            var robot1 = sut.Execute(1, 1, 'E', "RFRFRFRF");
+            var robot2 = sut.Execute(3, 2, 'N', "FRRFLLFFRRFLL");
+            var robot3 = sut.Execute(0, 3, 'W', "LLFFFLFLFL");
 
             // Assert
             Assert.Equal(1, robot1.X);
