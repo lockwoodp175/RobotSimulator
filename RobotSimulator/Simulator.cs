@@ -18,7 +18,7 @@ namespace RobotSimulator
             { 'F', new ForwardInstruction() }
         };
 
-        List<RobotState> _LostRobots = new List<RobotState>();
+        private HashSet<(sbyte, sbyte)> _lostCoordinates = new HashSet<(sbyte, sbyte)>();
 
         /// <summary>
         /// Sets the size of the board for this simulation
@@ -48,13 +48,22 @@ namespace RobotSimulator
                 if (_Instructions.TryGetValue(instruction, out IInstruction instr))
                 {
                     var newState = instr.Execute(state);
+                    bool ignoreMove = false;
+
                     if (IsLost(newState))
                     {
-                        var lostRobot = new RobotState(state.X, state.Y, state.Orientation, true);
-                        _LostRobots.Add(lostRobot);
-                        return lostRobot;
+                        if (!LostOneHereBefore(state))
+                        {
+                            var lostRobot = new RobotState(state.X, state.Y, state.Orientation, true);
+                            // store the coordinates of the lost robot
+                            _lostCoordinates.Add((lostRobot.X, lostRobot.Y));
+                            return lostRobot;
+                        }
+                        // Ignore this move as it would lose the robot and we've already lost one from here before
+                        ignoreMove = true;
                     }
-                    state = newState;
+
+                    state = ignoreMove ? state : newState;
                 }
             }
             return state;
@@ -68,6 +77,16 @@ namespace RobotSimulator
         private bool IsLost(RobotState state)
         {
             return (state.X < 0 || state.X > _width || state.Y < 0 || state.Y > _height);
+        }
+
+        /// <summary>
+        /// Check if we have lost a previous robot from this position
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns>true/false</returns>
+        private bool LostOneHereBefore(RobotState state)
+        {
+            return _lostCoordinates.Contains((state.X, state.Y));
         }
     }
 }
