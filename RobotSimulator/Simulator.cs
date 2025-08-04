@@ -54,6 +54,7 @@ namespace RobotSimulator
                         _LostRobots.Add(lostRobot);
                         return lostRobot;
                     }
+                    state = newState;
                 }
             }
             return state;
