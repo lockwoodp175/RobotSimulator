@@ -13,8 +13,7 @@ namespace RobotSimulator.Instructions
     };
         public RobotState Execute(RobotState state)
         {
-            state.Orientation = MoveFromTo[state.Orientation];
-            return state;
+            return new RobotState(state.X, state.Y, MoveFromTo[state.Orientation], state.Lost);
         }
     }
 }

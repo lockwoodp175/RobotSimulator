@@ -14,9 +14,7 @@ namespace RobotSimulator.Instructions
         public RobotState Execute(RobotState state)
         {
             (var xa, var ya) = Adjustments[state.Orientation];
-            state.X += xa;
-            state.Y += ya;
-            return state;
+            return new RobotState((sbyte)(state.X + xa), (sbyte)(state.Y + ya), state.Orientation, state.Lost);
         }
     }
 }

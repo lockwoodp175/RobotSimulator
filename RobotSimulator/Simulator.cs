@@ -18,6 +18,8 @@ namespace RobotSimulator
             { 'F', new ForwardInstruction() }
         };
 
+        List<RobotState> _LostRobots = new List<RobotState>();
+
         /// <summary>
         /// Sets the size of the board for this simulation
         /// </summary>
@@ -39,22 +41,32 @@ namespace RobotSimulator
         /// <returns></returns>
         public RobotState Execute(sbyte x, sbyte y, char orientation, string instructions)
         {
-            RobotState state = new RobotState
-            {
-                X = x,
-                Y = y,
-                Orientation = orientation,
-                Lost = false
-            };
+            RobotState state = new RobotState(x, y, orientation, false);
 
             foreach (char instruction in instructions.ToUpperInvariant())
             {
                 if (_Instructions.TryGetValue(instruction, out IInstruction instr))
                 {
-                    state = instr.Execute(state);
+                    var newState = instr.Execute(state);
+                    if (IsLost(newState))
+                    {
+                        var lostRobot = new RobotState(state.X, state.Y, state.Orientation, true);
+                        _LostRobots.Add(lostRobot);
+                        return lostRobot;
+                    }
                 }
             }
             return state;
+        }
+
+        /// <summary>
+        /// Test if a robot has been lost ie has moved outside the grid
+        /// </summary>
+        /// <param name="state">Robot state</param>
+        /// <returns>true/false</returns>
+        private bool IsLost(RobotState state)
+        {
+            return (state.X < 0 || state.X > _width || state.Y < 0 || state.Y > _height);
         }
     }
 }

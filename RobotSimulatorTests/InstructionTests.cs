@@ -14,10 +14,7 @@ namespace RobotSimulatorTests
         public void TestLeftInstruction(char input, char expected)
         {
             // Arrange
-            RobotState state = new RobotState
-            {
-                Orientation = input
-            };
+            RobotState state = new RobotState(1, 1, input, false);
             var sut = new LeftInstruction();
 
             // Act
@@ -35,10 +32,7 @@ namespace RobotSimulatorTests
         public void TestRightInstruction(char input, char expected)
         {
             // Arrange
-            RobotState state = new RobotState
-            {
-                Orientation = input
-            };
+            RobotState state = new RobotState(1, 1, input, false);
             var sut = new RightInstruction();
 
             // Act
@@ -56,12 +50,7 @@ namespace RobotSimulatorTests
         public void TestForwardInstruction(char orientation, sbyte expX, sbyte expY)
         {
             // Arrange
-            RobotState state = new RobotState
-            {
-                X = 2,
-                Y = 2,
-                Orientation = orientation,
-            };
+            RobotState state = new RobotState(2, 2, orientation, false);
             var sut = new ForwardInstruction();
 
             // Act
