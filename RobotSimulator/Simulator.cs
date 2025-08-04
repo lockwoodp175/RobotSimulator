@@ -11,7 +11,7 @@ namespace RobotSimulator
         private readonly sbyte _width;
         private readonly sbyte _height;
 
-        Dictionary<char, IInstruction> _Instructions = new Dictionary<char, IInstruction>
+        Dictionary<char, IInstruction> _instructionHandlers = new Dictionary<char, IInstruction>
         {
             { 'L', new LeftInstruction() },
             { 'R', new RightInstruction() },
@@ -45,7 +45,7 @@ namespace RobotSimulator
 
             foreach (char instruction in instructions.ToUpperInvariant())
             {
-                if (_Instructions.TryGetValue(instruction, out IInstruction instr))
+                if (_instructionHandlers.TryGetValue(instruction, out IInstruction instr))
                 {
                     var newState = instr.Execute(state);
                     bool ignoreMove = false;
