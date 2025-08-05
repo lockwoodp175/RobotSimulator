@@ -2,6 +2,6 @@
 {
     public interface IInstruction
     {
-        RobotState Execute(RobotState currentPos);
+        RobotState Execute(RobotState state);
     }
 }
