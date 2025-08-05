@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace RobotSimulator
 {
     public class InputFileParser
@@ -32,8 +34,13 @@ namespace RobotSimulator
         /// <returns></returns>
         public async Task Parse(StreamReader reader)
         {
+            if (reader == null)
+            {
+                throw new ArgumentNullException("reader");
+            }
+
             // Catch stream reader exceptions in calling code.
-            string sizeStr = await reader.ReadLineAsync();
+            string sizeStr = await reader.ReadLineAsync() ?? "";
             string[] parts = sizeStr.Split(new char[] { ' ', '\t' });
             if (parts.Length != 2)
             {
@@ -70,8 +77,13 @@ namespace RobotSimulator
         }
         private async Task<RobotInstructions?> ReadInputInstruction(StreamReader reader)
         {
-            string startStr = await reader.ReadLineAsync();
-            string instrStr = await reader.ReadLineAsync();
+            if (reader == null)
+            {
+                throw new ArgumentNullException("reader");
+            }
+
+            string? startStr = await reader.ReadLineAsync() ?? "";
+            string? instrStr = await reader.ReadLineAsync() ?? "";
             if (startStr == null || instrStr == null)
             {
                 return null;
