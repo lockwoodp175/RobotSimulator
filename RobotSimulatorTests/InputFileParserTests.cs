@@ -20,7 +20,7 @@ namespace RobotSimulatorTests
         }
 
         [Fact]
-        public async Task Parse_TooManyArgs_ThrowsException()
+        public async Task TestTooManyGridSizeArgsThrowsException()
         {
             // Arrange
             var sut = new InputFileParser();
