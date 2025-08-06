@@ -20,10 +20,8 @@ namespace RobotSimulator
                     string lost = state.Lost ? "LOST" : "";
                     Console.WriteLine($"{state.X} {state.Y} {state.Orientation} {lost}");
                 }
-
-                Console.WriteLine("Press enter to exit simulation");
-                Console.ReadLine();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error reading input file: {ex.Message}");
             }

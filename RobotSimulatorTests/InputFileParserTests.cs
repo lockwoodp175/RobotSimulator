@@ -10,13 +10,13 @@ namespace RobotSimulatorTests
     public class InputFileParserTests
     {
         [Fact]
-        public void MissingInputFileThrowsIOException()
+        public async Task MissingInputFileThrowsException()
         {
             // Arrange
             var sut = new InputFileParser();
 
             // Act
-            _ = Assert.ThrowsAsync<IOException>(async () => { await sut.Parse("missingFile"); });
+            _ = await Assert.ThrowsAsync<FileNotFoundException>(async () => { await sut.Parse("missingFile"); });
         }
 
         [Fact]

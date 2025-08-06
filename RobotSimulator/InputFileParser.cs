@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace RobotSimulator
 {
     public class InputFileParser
@@ -82,8 +80,9 @@ namespace RobotSimulator
                 throw new ArgumentNullException("reader");
             }
 
-            string? startStr = await reader.ReadLineAsync() ?? "";
-            string? instrStr = await reader.ReadLineAsync() ?? "";
+            string? startStr = await reader.ReadLineAsync();
+            string? instrStr = await reader.ReadLineAsync();
+
             if (startStr == null || instrStr == null)
             {
                 return null;
@@ -92,7 +91,7 @@ namespace RobotSimulator
             string[] startParts = startStr.Split(new char[] { ' ', '\t' });
             if (startParts.Length != 3)
             {
-                throw new Exception("Incorrect robot start position {startStr}");
+                throw new Exception($"Incorrect robot start position {startStr}");
             }
             (var x, var y) = ParseCoordinates(startParts);
 
